@@ -5,3 +5,4 @@ android/local.properties
 *.keystore
 *.jks
 .DS_Store
+.github/
