@@ -908,10 +908,14 @@ $('cbtn').addEventListener('click', async ()=>{
   $('cbtn').disabled = true;
   $('spin').classList.add('active');
   try{
+    const ctrl = new AbortController();
+    const timeout = setTimeout(()=>ctrl.abort(), 15000);
     const res = await fetch(PROXY_URL, {
       method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({ number: num })
+      body: JSON.stringify({ number: num }),
+      signal: ctrl.signal
     });
+    clearTimeout(timeout);
     const data = await res.json();
     const banned = data.banned === true;
     const reason = data.reason || '';
@@ -919,7 +923,7 @@ $('cbtn').addEventListener('click', async ()=>{
     openResult(banned, num, reason);
   }catch(err){
     console.error('Erreur API', err);
-    toast('Le service est momentanément injoignable');
+    if(err.name === 'AbortError'){ toast('Le service met trop de temps a repondre (reessaie dans une minute)'); } else { toast('Le service est momentanement injoignable'); }
   }finally{
     $('cbtn').disabled = false;
     $('spin').classList.remove('active');
