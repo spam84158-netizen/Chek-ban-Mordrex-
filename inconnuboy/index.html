@@ -512,14 +512,6 @@ img{max-width:100%;display:block;}
       </button>
     </div>
 
-    <div class="set-block" style="margin-top:2rem;">
-      <div class="set-label"><i class="fa-solid fa-link"></i> Modifier les liens (stockés en base64)</div>
-      <p class="set-hint">Colle tes vrais liens ici — ils seront encodés automatiquement.</p>
-      <input class="set-input" id="setWaLink" placeholder="Lien du canal WhatsApp">
-      <input class="set-input" id="setTgLink" placeholder="Lien du canal Telegram" style="margin-top:.6rem">
-      <div class="btn-row"><button class="savebtn" id="saveSociety"><i class="fa-solid fa-check"></i> Enregistrer</button></div>
-    </div>
-
     <div class="creator-card">
       <div class="creator-seal">DX</div>
       <div>
@@ -778,17 +770,7 @@ $('resetSettings').addEventListener('click', ()=>{
 /* ============================================================
    XYLDREX SOCIETY — liens base64 + effet de déchiffrement
    ============================================================ */
-function fillSocietyForm(){
-  try{ $('setWaLink').value = atob(links.wa); }catch(e){ $('setWaLink').value=''; }
-  try{ $('setTgLink').value = atob(links.tg); }catch(e){ $('setTgLink').value=''; }
-}
-$('saveSociety').addEventListener('click', ()=>{
-  const wa = $('setWaLink').value.trim(), tg = $('setTgLink').value.trim();
-  if(wa) links.wa = btoa(wa);
-  if(tg) links.tg = btoa(tg);
-  saveJSON(LS.links, links);
-  toast('Canaux mis à jour (base64)');
-});
+function fillSocietyForm(){}
 
 const decryptLines = [
   '> connexion au canal sécurisé_',
