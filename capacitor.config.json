@@ -1,0 +1,9 @@
+{
+  "appId": "com.xyldrexsociety.checkban",
+  "appName": "XYLDREX CHECK BAN",
+  "webDir": "inconnuboy",
+  "bundledWebRuntime": false,
+  "android": {
+    "allowMixedContent": true
+  }
+}
