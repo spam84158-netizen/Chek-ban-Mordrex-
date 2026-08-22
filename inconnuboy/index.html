@@ -512,10 +512,6 @@ img{max-width:100%;display:block;}
       </button>
     </div>
 
-    <div class="terminal-box" id="terminalBox">
-      <p class="t-line" id="termLine">&gt; en attente_<span class="cur">&nbsp;</span></p>
-    </div>
-
     <div class="set-block" style="margin-top:2rem;">
       <div class="set-label"><i class="fa-solid fa-link"></i> Modifier les liens (stockés en base64)</div>
       <p class="set-hint">Colle tes vrais liens ici — ils seront encodés automatiquement.</p>
@@ -596,8 +592,8 @@ const SUPPORT_LINK = 'https://github.com/INCONNU-BOY-SENSEI';
 // Liens des canaux, stockés en base64 (comme demandé). Remplace les valeurs
 // en clair ci-dessous puis ils seront ré-encodés, OU modifie-les directement
 // depuis le panneau "Xyldrex Society" dans l'app (recommandé).
-const DEFAULT_WA_B64 = btoa('https://whatsapp.com/channel/0029VbC6It7K0IBkQwaKYd2J');
-const DEFAULT_TG_B64 = btoa('https://t.me/xyldrex_society');
+const DEFAULT_WA_B64 = '';
+const DEFAULT_TG_B64 = '';
 
 /* ============================================================
    ÉTAT / STOCKAGE LOCAL
@@ -804,28 +800,13 @@ document.querySelectorAll('.society-card').forEach(card=>{
   card.addEventListener('click', ()=>{
     const key = card.dataset.channel;
     const b64 = links[key];
-    startMatrix();
-    $('terminalBox').classList.add('show');
-    let i = 0;
-    const line = $('termLine');
-    clearInterval(window._termTimer);
-    window._termTimer = setInterval(()=>{
-      line.innerHTML = decryptLines[i] + '<span class="cur">&nbsp;</span>';
-      i++;
-      if(i >= decryptLines.length){
-        clearInterval(window._termTimer);
-        setTimeout(()=>{
-          try{
-            const url = atob(b64);
-            window.open(url, '_blank');
-            line.innerHTML = '&gt; canal ouvert ✓<span class="cur">&nbsp;</span>';
-          }catch(e){
-            line.innerHTML = '&gt; erreur de déchiffrement<span class="cur">&nbsp;</span>';
-          }
-          setTimeout(stopMatrix, 1400);
-        }, 500);
-      }
-    }, 420);
+    if(!b64){ toast('Aucun lien defini pour ce canal'); return; }
+    try{
+      const url = atob(b64);
+      window.open(url, '_blank');
+    }catch(e){
+      toast('Lien invalide');
+    }
   });
 });
 
