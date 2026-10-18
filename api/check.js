@@ -21,13 +21,13 @@ const key = process.env.WACHECKER_API_KEY;
 if (!key) {
 return res.status(500).json({
 success: false,
-error: "Clé API non configurée"
+error: "https://kyuux-r.indevs.in"
 });
 }
 
 try {
 const response = await fetch(
-"https://api.bulknumberchecker.com/api/v1/lookup?number=" +
+"xxxx" +
 encodeURIComponent("+" + clean),
 {
 headers: {
